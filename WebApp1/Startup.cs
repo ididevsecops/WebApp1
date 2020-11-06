@@ -32,6 +32,7 @@ namespace WebApp1
             {
                 endpoints.MapGet("/", async context =>
                 {
+                    context.Response.Headers.Add("idso", "WebApp1");
                     await context.Response.WriteAsync("");
                 });
             });
