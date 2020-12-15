@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace WebApp1
 {
@@ -23,7 +25,7 @@ namespace WebApp1
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
@@ -37,7 +39,19 @@ namespace WebApp1
                 endpoints.MapGet("/", async context =>
                 {
                     string header = this._config.GetValue<string>("Header");
+
+                    logger.LogTrace("TRACE MESSAGE");
+
+                    logger.LogInformation("INFORMATION MESSAGE");
+
+                    logger.LogWarning("WARNING MESSAGE");
+
+                    logger.LogError("ERROR MESSAGE");
+
+                    logger.LogCritical("CRITICAL MESSAGE");
+
                     context.Response.Headers.Add("idso", header);
+
                     await context.Response.WriteAsync("");
                 });
             });
